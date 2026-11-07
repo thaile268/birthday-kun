@@ -78,6 +78,7 @@ p{margin:0;font-size:clamp(16px,2.4vw,20px);max-width:520px;line-height:1.5}
 .lantern b{font-size:calc(12px*var(--s,1));color:#5a2a00;line-height:1.2;word-break:break-word}
 @keyframes fly{0%{transform:translateY(0);opacity:1}80%{opacity:1}100%{transform:translateY(-125vh);opacity:0}}
 @keyframes sway{from{margin-left:-70px}to{margin-left:-30px}}
+#wish{white-space:pre-line}
 </style>
 </head>
 <body>
@@ -145,11 +146,11 @@ const CFG={
   name:"Kun Đoàn",
   from:"",
   since:"2026-06-25",           // ngày hai bạn quen nhau (YYYY-MM-DD)
-  wish:"Bé Bot không chúc bạn một cuộc đời lúc nào cũng thuận lợi, vì tui biết những điều đáng giá thường cần rất nhiều nỗ lực để có được.
+  wish:`Bé Bot không chúc bạn một cuộc đời lúc nào cũng thuận lợi, vì tui biết những điều đáng giá thường cần rất nhiều nỗ lực để có được.
 Bé Bot chỉ mong bạn luôn đủ sức khỏe để theo đuổi đam mê, đủ can đảm để bắt đầu những điều mới, đủ kiên nhẫn để đi qua những ngày khó khăn và đủ hạnh phúc để thấy mọi cố gắng của mình đều xứng đáng.
 Cảm ơn vì đã là một người bạn tuyệt vời trong hành trình này. Mong rằng những năm tháng tiếp theo, chúng ta vẫn còn thật nhiều câu chuyện để kể, thật nhiều cột mốc để ăn mừng và thật nhiều kỷ niệm để cùng nhau tạo nên.
 Tuổi mới thật hạnh phúc nhé! Happy Birthday Mah Friend! ❤️ Xõa đêêêêê
-Ký Tên: BÉ BOT (BOT trong ROBOT nhé)",
+Ký Tên: BÉ BOT (BOT trong ROBOT nhé)`,
   photos:[                       // src: dán ảnh (data URI) hoặc để trống để dùng emoji
     {src:"",emoji:"🤳",cap:"Lần đầu tụi mình chụp chung"},
     {src:"",emoji:"🍜",cap:"Buổi đi ăn nhớ đời"},
@@ -160,7 +161,7 @@ Ký Tên: BÉ BOT (BOT trong ROBOT nhé)",
 /* ======================= */
 const $=id=>document.getElementById(id);
 const vib=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
-$("t0").textContent="Gửi "+CFG.name+" 🎈";$("nm").textContent=CFG.name;$("wish").textContent=CFG.wish+" — "+CFG.from;
+$("t0").textContent="Gửi "+CFG.name+" 🎈";$("nm").textContent=CFG.name;$("wish").textContent=CFG.wish+(CFG.from?" — "+CFG.from:"");
 const days=Math.max(0,Math.floor((Date.now()-new Date(CFG.since))/864e5));
 void CFG.photos.map(p=>`<div class="ph"><div class="img">${p.src?`<img src="${p.src}" alt="">`:p.emoji}</div><small>${p.cap}</small></div>`).join("");
 void CFG.vouchers.map(v=>`<div class="v">${v}</div>`).join("");
@@ -194,7 +195,7 @@ const N={C:261.63,D:293.66,E:329.63,F:349.23,G:392,A:440,B:466.16,H:523.25};
 const song="C.75 C.25 D1 C1 F1 E2 C.75 C.25 D1 C1 G1 F2 C.75 C.25 H1 A1 F1 E1 D1 B.75 B.25 A1 F1 G1 F2".split(" ").map(s=>[N[s[0]],+s.slice(1)]);
 function play(){const bt=.5;let t=ac.currentTime+.05;song.forEach(([f,d])=>{const o=ac.createOscillator(),g=ac.createGain();o.type="triangle";o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+d*bt);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+d*bt+.05);t+=d*bt});
  mt=setTimeout(()=>playing&&play(),(t-ac.currentTime+1.2)*1000)}
-function music(on){playing=on;$("mus").textContent=on?"🔊":"🔇";clearTimeout(mt);if(on){ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume();play()}}
+function music(on){try{playing=on;$("mus").textContent=on?"🔊":"🔇";clearTimeout(mt);if(on){ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume();play()}}catch(e){playing=false;$("mus").textContent="🔇"}}
 $("mus").onclick=()=>music(!playing);
 
 /* --- Stages --- */
@@ -214,7 +215,7 @@ $("blow").onclick=blow;$("cake").onclick=blow;
 /* ---- Mini game ---- */
 const FORT=[["💛","Cung đường nào cũng có một đứa cầm banner đứng chờ ở vạch đích. Chúc Ní đi xa bao nhiêu thì cũng sẽ luôn có người đợi."],["👑","Ví đầy tiền, sức khỏe như trâu, và là người đàn bà hạnh phúc nhất. Năm nay Ní lấy đủ cả ba cho toi!"],["🌈","Mọi điều ước năm nay đều thành thật, kể cả điều ước vô lý nhất!"]];
 const shuf=a=>a.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
-$("fr").textContent=CFG.from;$("days").textContent=days.toLocaleString("vi-VN");
+$("fr").textContent=CFG.from||"Bé Bot";$("days").textContent=days.toLocaleString("vi-VN");
 const MS={5:"Cung đường nào cũng có một đứa cầm banner đứng chờ ở vạch đích. Chúc Ní đi xa bao nhiêu thì cũng sẽ luôn có người đợi.",10:"Mọi điều ước năm nay đều thành thật, kể cả điều ước vô lý nhất!",15:"Ví đầy tiền, sức khỏe như trâu, và là người đàn bà hạnh phúc nhất. Năm nay Ní lấy đủ cả ba cho toi!"};let km=0,shown={};
 function initRun(){km=0;shown={};$("rk").textContent="0.0";$("rr").style.left="0%";$("rm").textContent="Chạm liên tục vào nút để chạy nhé! Có 3 cột mốc đang chờ Ní phía trước 🚩";$("n3").style.display="none";$("rb").style.display=""}
 $("rb").addEventListener("pointerdown",()=>{if(km>=21)return;km=Math.min(21,km+.5);vib(8);$("rk").textContent=km.toFixed(1);$("rr").style.left=km/21*100+"%";
