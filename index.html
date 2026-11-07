@@ -147,7 +147,7 @@ const CFG={
   name:"Kun Đoàn",
   from:"Bé Bot",
   since:"2026-06-25",
-  wish: "Bé Bot không chúc bạn một cuộc đời lúc nào cũng thuận lợi, vì tui biết những điều đáng giá thường cần rất nhiều nỗ lực để có được.\n\nBé Bot chỉ mong bạn luôn đủ sức khỏe để theo đuổi đam mê, đủ can đảm để bắt đầu những điều mới, đủ kiên nhẫn để đi qua những ngày khó khăn và đủ hạnh phúc để thấy mọi cố gắng của mình đều xứng đáng.\n\nCảm ơn vì đã là một người bạn tuyệt vời trong hành trình này. Mong rằng những năm tháng tiếp theo, chúng ta vẫn còn thật nhiều câu chuyện để kể, thật nhiều cột mốc để ăn mừng và thật nhiều kỷ niệm để cùng nhau tạo nên.\n\nTuổi mới thật hạnh phúc nhé! Happy Birthday Mah Friend! ❤️\n\nKý Tên: BÉ BOT (BOT trong ROBOT nhé)",
+  wish: "Bé Bot không chúc Kun Đoàn một cuộc đời lúc nào cũng thuận lợi, vì Bé Bot biết những điều đáng giá thường cần rất nhiều nỗ lực để có được.\n\nBé Bot chỉ mong Kun Đoàn luôn đủ sức khỏe để theo đuổi đam mê, đủ can đảm để bắt đầu những điều mới, đủ kiên nhẫn để đi qua những ngày khó khăn và đủ hạnh phúc để thấy mọi cố gắng của mình đều xứng đáng.\n\nCảm ơn vì Kun Đoàn đã là một người bạn tuyệt vời trong hành trình này. Mong rằng những năm tháng tiếp theo, chúng ta vẫn còn thật nhiều câu chuyện để kể, thật nhiều cột mốc để ăn mừng và thật nhiều kỷ niệm để cùng nhau tạo nên.\n\nTuổi mới thật hạnh phúc nhé! Happy Birthday Mah Friend! ❤️\n\nKý Tên: BÉ BOT (BOT trong ROBOT nhé)",
   photos:[                       // src: dán ảnh (data URI) hoặc để trống để dùng emoji
     {src:"",emoji:"🤳",cap:"Lần đầu tụi mình chụp chung"},
     {src:"",emoji:"🍜",cap:"Buổi đi ăn nhớ đời"},
@@ -221,7 +221,7 @@ $("rb").addEventListener("pointerdown",()=>{if(km>=21)return;km=Math.min(21,km+.
 function mk(t,dl,s){const l=document.createElement("div");l.className="lantern";l.style.cssText="animation-delay:"+dl+"s,0s;--s:"+s+(t?"":";left:"+(8+Math.random()*84)+"%");if(t){const e=document.createElement("b");e.textContent=t;l.appendChild(e)}document.body.appendChild(l);setTimeout(()=>l.remove(),(dl+11)*1000)}
 function initLantern(){$("p4").textContent="Nhắm mắt lại và ước 1 điều ước sau đó nhập điều ước vào ô!";$("wi").value="";$("wi").style.display="";$("lb").style.display="";$("n4").style.display="none"}
 $("lb").onclick=()=>{const t=$("wi").value.trim()||"Mong mọi điều ước thành thật";$("wi").blur();vib(40);mk(t,0,1.4);for(let i=0;i<5;i++)mk("",1+i*.7,.5+Math.random()*.4);
- $("wi").style.display="none";$("lb").style.display="none";$("p4").textContent="Để những điều ước bay lên theo đèn lông, và để những điều tốt đẹp ở lại bên Ní. Chúc Ní tuổi mới bình an trong tâm hồn, rực rỡ trong cuộc sống nhé 💛";setTimeout(()=>{burst(W/2,H/2,80);$("n4").style.display=""},3500)};
+ $("wi").style.display="none";$("lb").style.display="none";$("p4").textContent="Để những điều ước bay lên theo đèn lồng, và để những điều tốt đẹp ở lại bên Ní. Chúc Ní tuổi mới bình an trong tâm hồn, rực rỡ trong cuộc sống nhé 💛";setTimeout(()=>{burst(W/2,H/2,80);$("n4").style.display=""},3500)};
 $("n2").onclick=()=>go(4);
 $("n3").onclick=()=>go(5);
 $("n4").onclick=()=>go(3);
