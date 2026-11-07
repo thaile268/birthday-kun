@@ -98,7 +98,6 @@ p{margin:0;font-size:clamp(16px,2.4vw,20px);max-width:520px;line-height:1.5}
   <p id="q1">Kun Đoàn có muốn mở quà không?</p>
   <div class="row" style="position:relative">
     <button class="btn" id="open">Mở quà</button>
-    <button class="btn ghost" id="no">Từ chối</button>
   </div>
 </section>
 
@@ -200,11 +199,17 @@ function go(n){document.querySelectorAll(".stage").forEach((s,i)=>s.classList.to
 let taps=0;
 $("gift").onclick=()=>{if(!playing)music(true);taps++;vib(20);const g=$("gift");g.classList.remove("shake");void g.offsetWidth;g.classList.add("shake");$("prog").style.width=taps*10+"%";
  if(taps>=10){vib([60,40,100]);burst(W/2,H/2,140);$("gift").textContent="🎁";setTimeout(()=>go(1),700)}};
-$("open").onclick=()=>{vib(50);burst(W/2,H/2,160);go(2)};
-let nos=0;const msgs=["Chắc chưa?","Đừng mà 🥺","Nút này trơn lắm nha!","Thôi bấm 'Mở quà' đi 😆"];
-function run(e){e.preventDefault();const b=$("no");b.style.position="fixed";const w=b.offsetWidth,h=b.offsetHeight;
- b.style.left=Math.random()*(W-w-20)+10+"px";b.style.top=Math.random()*(H-h-120)+60+"px";b.style.zIndex=8;$("q1").textContent=msgs[nos++%msgs.length];vib(10)}
-$("no").addEventListener("pointerenter",run);$("no").addEventListener("touchstart",run,{passive:false});$("no").addEventListener("click",run);
+/* --- Nút "Mở quà" chạy trốn: né 9 lần, lần bấm thứ 10 mới trúng (đổi NEED để chỉnh số lần) --- */
+const NEED=10,q1Text=$("q1").textContent;let dodges=0;
+const dmsgs=["Bấm lẹ đi 😏","Già rồi hả? Chậm chạp vậy","Bấm lẹ còn ăn SN 🧈","Đúng là Kun Đoàn đã già 😆","Nghiêm túc lên coi nào? 🤭","Xin Bé Bot đi rồi cho mở quà 😴","Nói rồi, xin đi rồi cho 🙈","Lần cuối nha má 🤥","Thôi được, lần này cho bấm 😌"];
+const canOpen=()=>dodges>=NEED-1;
+function dodge(e){if(canOpen())return;e.preventDefault();const b=$("open"),r=b.getBoundingClientRect(),w=r.width,h=r.height;
+ if(b.style.position!=="fixed"){b.style.position="fixed";b.style.left=r.left+"px";b.style.top=r.top+"px";b.style.zIndex=8;void b.offsetWidth;b.style.transition="left .25s,top .25s,transform .15s"}
+ let x,y,t=0;do{x=Math.random()*(W-w-20)+10;y=Math.random()*(H-h-120)+60}while(Math.hypot(x-r.left,y-r.top)<140&&++t<30);
+ b.style.left=x+"px";b.style.top=y+"px";dodges++;$("q1").textContent=dmsgs[Math.min(dodges,dmsgs.length)-1];vib(10)}
+$("open").addEventListener("pointerdown",dodge);
+$("open").addEventListener("pointerenter",e=>{if(e.pointerType==="mouse")dodge(e)});
+$("open").addEventListener("click",e=>{if(!canOpen()){if(e.detail===0)dodge(e);return}vib(50);burst(W/2,H/2,160);go(2)});
 function blow(){if($("flames").dataset.d)return;$("flames").dataset.d=1;[...$("flames").children].forEach((f,i)=>setTimeout(()=>f.classList.add("out"),i*250));
  setTimeout(()=>{vib([80,50,80,50,150]);burst(W/2,H/3,200);burst(W*.2,H/2,80);burst(W*.8,H/2,80);$("p2").textContent="Mong rằng tuổi mới sẽ dịu dàng với Ní, như cách những điều đẹp đẽ luôn tìm đến Ní! ✨ Happy Birthday!";$("blow").style.display="none";$("n2").style.display=""},800)}
 $("blow").onclick=blow;$("cake").onclick=blow;
@@ -228,7 +233,7 @@ $("n4").onclick=()=>go(3);
 $("cert").onclick=()=>{if($("stamp").classList.contains("on"))return;$("stamp").classList.add("on");vib(120);burst(W/2,H/2,160);$("hint").textContent="Chúc mừng sinh nhật! 🎂💖"};
 function resetGames(){initRun();initLantern();$("stamp").classList.remove("on");$("hint").textContent="Vuốt ngang xem ảnh, rồi chạm vào chứng nhận để đóng dấu 👆"}
 resetGames();
-$("again").onclick=()=>{resetGames();taps=0;nos=0;$("prog").style.width="0";$("flames").dataset.d="";[...$("flames").children].forEach(f=>f.classList.remove("out"));$("blow").style.display="";$("n2").style.display="none";$("p2").textContent="Chạm vào bánh hoặc bấm nút để thổi nến nhé!";$("no").style.position="";$("q1").textContent="Bạn có muốn mở quà không?";go(0)};
+$("again").onclick=()=>{resetGames();taps=0;dodges=0;$("prog").style.width="0";$("flames").dataset.d="";[...$("flames").children].forEach(f=>f.classList.remove("out"));$("blow").style.display="";$("n2").style.display="none";$("p2").textContent="Chạm vào bánh hoặc bấm nút để thổi nến nhé!";const ob=$("open");ob.style.cssText="";$("q1").textContent=q1Text;go(0)};
 </script>
 </body>
 </html>
